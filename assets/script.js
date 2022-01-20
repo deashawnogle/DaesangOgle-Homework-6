@@ -1,85 +1,89 @@
 //global vaiables
 const apiKey = "7ba4078f3e5e2434eebb3325598ec14b";
 const searchButton = $('#searchButton');
-const cities = localStorage.getItem("history") ? JSON.parse(localStorage.getItem("history")) : []
+const historyCity = localStorage.getItem("searchHistory") ? JSON.parse(localStorage.getItem("searchHistory")) : []
 
 
 //function for Searh click / 
-searchButton.on("click", function(){
+searchButton.on("click", function () {
     const cityName = $("#search-input").val().trim()
+    historyCity.push(cityName)
+    localStorage.setItem("searchHistory", JSON.stringify(historyCity))
+
     display(cityName)
 });
 
 
+//local storage for search History
+function displayCity() {
+    const searchHistoryList = $(".searchHistoryList")
+    searchHistoryList.empty();
+    for (let i = 0; i < historyCity.length; i++) {
+        searchHistoryList.append(`<li>${historyCity[i]}</li>`)
+
+    }
+}
+
+displayCity();
+
+
+
 //Display current weather page from API with AJAX
 function display(cityName) {
-    
+
     let requestURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
 
     $.ajax({
         url: requestURL,
         method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
 
         //console.log(response)
         let iconCode = response.weather[0].icon;
-        let iconUrl = "http://openweathermap.org/img/wn/"+ iconCode + "@2x.png";
+        let iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
 
         $(".name").text(response.name);
-        $(".date").text(new Date(response.dt*1000).toLocaleDateString());
+        $(".date").text(new Date(response.dt * 1000).toLocaleDateString());
         $(".img").attr('src', iconUrl);
         $(".temp").text("Temp (F): " + response.main.temp + "F");
         $(".humid").text("Humid: " + response.main.humidity + " %");
-        $(".wind").text("Wind: " + response.wind.speed + " MPH");        
-        
+        $(".wind").text("Wind: " + response.wind.speed + " MPH");
+
 
         const lat = response.coord.lat
         const lon = response.coord.lon
 
-        fivedays(lat,lon);
+        fivedays(lat, lon);
     });
 
 }
 
-//Receiving UV index(lat,lon) using by ajax  --need to be fix
-function uvIndex(lat, lon) {
-
-    let uvURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=daily&appid=" + apiKey + "&units=imperial"
-
-    console.log(response)
-
-    $.ajax({
-        url: uvURL,
-        method: "GET"
-    }).then(function(response){
-
-        $(".uv").text("UV Index: " + response.current.uvi);
-
-    });
-}
 
 //Display fivdays forcast by ajax  --Icon is not displaying
-function fivedays (lat,lon) {
+function fivedays(lat, lon) {
     let requestURL5 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&units=imperial";
 
     $.ajax({
         url: requestURL5,
         method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
+
+        $(".uv").text("UV Index: " + response.current.uvi);
 
         console.log(response)
         for (let i = 1; i < response.daily.length - 2; i++) {
 
-        let iconCode = response.daily[i].weather[0].icon;
-        let iconUrl = "http://openweathermap.org/img/wn/"+ iconCode + ".png";
+            let iconCode = response.daily[i].weather[0].icon;
+            let iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
 
-        $(".date" + i).text(new Date(response.daily[i].dt*1000).toLocaleDateString());
-        $(".dateimg" + i).attr('src', iconUrl);
-        $(".dateTemp" + i).text("Temp (F): " + response.daily[i].temp.day + "F");
-        $(".dateHumid" + i).text("Humid: " + response.daily[i].humidity + " %");
-        $(".dateWind" + i).text("Wind: " + response.daily[i].wind_speed + " MPH");   
-    };
-});
+            $(".date" + i).text(new Date(response.daily[i].dt * 1000).toLocaleDateString());
+            $(".dateimg" + i).attr('src', iconUrl);
+            $(".dateTemp" + i).text("Temp (F): " + response.daily[i].temp.day + "F");
+            $(".dateHumid" + i).text("Humid: " + response.daily[i].humidity + " %");
+            $(".dateWind" + i).text("Wind: " + response.daily[i].wind_speed + " MPH");
+        };
+        displayCity();
+    });
 }
 
 
@@ -111,13 +115,7 @@ function fivedays (lat,lon) {
 
 // searchButtons();
 
-//display weather current weather
 
-
-
-
-
-//function uvIndex (lon, lat)
 
 //let uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid="+ apiKey + "&lat=" + lat + "&lon=" + lon;
 
@@ -160,9 +158,9 @@ function fivedays (lat,lon) {
         // $(".humidity").text("Humidity: " + response.main.humidity + " %");
         // $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
         // $(".icon").attr('src', iconUrl);
-    
-        
-    
+
+
+
 
 
 // function display(city = $("#search-input").val().trim()) {
@@ -172,17 +170,17 @@ function fivedays (lat,lon) {
 //             url: queryURL,
 //             method: "GET"
 //           }).then(function(response) {
-    
+
 //             var iconcode = response.weather[0].icon;
 //             var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-    
+
 //             $(".name").text(response.name);
 //             $(".date").text(new Date(response.dt*1000).toLocaleDateString());
 //             $(".temperature").text("Temperature (F): " + ((response.main.temp- 273.13) * 1.80 +32).toFixed(2));
 //             $(".humid").text("Humidity: " + response.main.humidity + " %");
 //             $(".wind").text("Wind Speed: " + response.wind.speed + " MPH");
 //             $(".icon").attr('src', iconurl);
-    
+
 //             uvindex(response.coord.lon,response.coord.lat);
 //             fivedays(city);
 //           });
@@ -191,7 +189,7 @@ function fivedays (lat,lon) {
 // fetch(queryURL)
 //     .then(function (response) {
 //         return response.json(); })
-        
+
 //     .then(function (data) {
 //         console.log('stuff from API',data)
 //     })

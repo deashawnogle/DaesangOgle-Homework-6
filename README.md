@@ -10,7 +10,7 @@
 
 ## About Project 
 
-Day Scheduler organize schedule for a day with time
+Weather Dashboard current day / 5 days forcast with TEMP, Humidity, Wind, UV index
 
 --------------------
 

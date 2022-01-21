@@ -20,7 +20,6 @@ Day Scheduler organize schedule for a day with time
 - Javascript
 - JQuery
 - JSon for Local Storage
-- BootStrap for styling
 - Ajax
 - API used for weather info (https://openweathermap.org/api)
 
@@ -31,7 +30,7 @@ Day Scheduler organize schedule for a day with time
 
 ## Deployed Link
 
-https://deashawnogle.github.io/WorkDayScheduler/
+https://deashawnogle.github.io/Weather-Dashboard/
 
 --------------------
 

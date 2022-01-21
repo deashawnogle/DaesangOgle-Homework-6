@@ -97,5 +97,12 @@ function fivedays(lat, lon) {
 // function uvIndex() {
 //     let uvIndexPoint = $(".uv")
 
-//     if(uvIndexPoint < 5)
-// }
+//     if(uvIndexPoint < 3) {
+//         $("#result").css({ 'background-color': 'green'});
+//         isDark = !isDark;
+//     else if {
+//         $("#result").css({ 'background-color': 'yellow'});
+//         isDark = !isDark;
+//         }
+//     };
+// };

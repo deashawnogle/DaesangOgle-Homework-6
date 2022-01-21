@@ -75,8 +75,9 @@ function fivedays(lat, lon) {
         url: requestURL5,
         method: "GET"
     }).then(function (response) {
-        // if else 
 
+
+        //UV index background color changing depend on UV index
         console.log('uvi index before if!!!', response.current.uvi)
         if(parseInt(response.current.uvi) > 2) {
             $(".uv").removeClass('codeGreen')
@@ -103,16 +104,3 @@ function fivedays(lat, lon) {
         displayCity();
     });
 }
-
-// function uvIndex() {
-//     let uvIndexPoint = $(".uv")
-
-//     if(uvIndexPoint < 3) {
-//         $("#result").css({ 'background-color': 'green'});
-//       
-//     else if {
-//         $("#result").css({ 'background-color': 'yellow'});
-//         
-//         }
-//     };
-// };

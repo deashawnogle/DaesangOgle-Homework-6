@@ -10,3 +10,7 @@ body {
 #header {
     background-image: linear-gradient(to right, blue, rgb(3, 3, 59));
 }
+
+ul li {
+    margin: 5px;
+}

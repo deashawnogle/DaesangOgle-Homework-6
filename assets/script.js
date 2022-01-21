@@ -75,6 +75,16 @@ function fivedays(lat, lon) {
         url: requestURL5,
         method: "GET"
     }).then(function (response) {
+        // if else 
+
+        console.log('uvi index before if!!!', response.current.uvi)
+        if(parseInt(response.current.uvi) > 2) {
+            $(".uv").removeClass('codeGreen')
+            $(".uv").addClass('codeRed')
+        } else {
+            $(".uv").removeClass('codeRed')
+            $(".uv").addClass('codeGreen')
+        }
 
         $(".uv").text("UV Index: " + response.current.uvi);
 
@@ -99,10 +109,10 @@ function fivedays(lat, lon) {
 
 //     if(uvIndexPoint < 3) {
 //         $("#result").css({ 'background-color': 'green'});
-//         isDark = !isDark;
+//       
 //     else if {
 //         $("#result").css({ 'background-color': 'yellow'});
-//         isDark = !isDark;
+//         
 //         }
 //     };
 // };
